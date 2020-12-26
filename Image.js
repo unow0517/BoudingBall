@@ -8,6 +8,7 @@ export class Image_{
         image.src =this.source;
         
         ctx.beginPath();
+        ctx.fillStyle='green'
         ctx.globalCompositeOperation = 'destination-over';
         ctx.drawImage(image, x,y,width,height )
         ctx.fill();

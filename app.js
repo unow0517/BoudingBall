@@ -1,5 +1,7 @@
-import {Image_} from './Image.js'
-import { Ball } from './Ball.js'
+import {Image_} from './Image.js';
+import { Ball } from './Ball.js';
+import { Text } from './text.js';
+import { YunHo } from './YunHo.js';
 
 class App{
     constructor(){
@@ -9,20 +11,24 @@ class App{
         document.body.appendChild(this.canvas)
         window.addEventListener('resize', this.resize1.bind(this), false)
         this.resize1();
-       
-        this.image_= new Image_('./MyName.png');
-        
-        this.imageX = 0;
-        this.imageY = 500;
-        this.imageWidth = this.canvas.width;
-        this.imageHeight = 500;
-        
-        this.ballX = 300;
-        this.ballY = 300;
+
+        this.yunho = new YunHo(this.ctx,200,'black');
+
+        this.yunho.drawY(100,100);
+        this.yunho.drawU(600,100);
+        this.yunho.drawN(1200,100);
+        this.yunho.drawH(100,800);
+        this.yunho.drawO(600,800);
+
         this.ballRadius = 20;
+        this.ballX = this.ballRadius + (Math.random()*(this.stageWidth - 2*this.ballRadius));
+        console.log(this.ballX)
+        this.ballY =  this.ballRadius + (Math.random()*(this.stageHeight - 2*this.ballRadius));
         this.ballSpeed = 30;
         this.ball = new Ball(this.ballX,this.ballY,this.ballRadius,this.ballSpeed);
-        
+
+
+
         window.requestAnimationFrame(this.animate.bind(this))
 
         }
@@ -36,26 +42,16 @@ class App{
     }
 
     animate(){
-        window.requestAnimationFrame(this.animate.bind(this))
-        this.image_.draw(this.ctx,this.imageX,this.imageY,this.imageWidth,this.imageHeight); 
-        this.ctx.globalCompositeOperation = 'source-over';
-        const imageMaxX = this.imageX + this.imageWidth
-        const imageMaxY = this.imageY + this.imageHeight
+        window.requestAnimationFrame(this.animate.bind(this));
 
-        if(this.ball.x > this.imageX && this.ball.x<= imageMaxX &&
-            this.ball.y> this.imageY && this.ball.y <= imageMaxY){
-            this.ball.draw(this.ctx)
-            this.ball.boundWindow(this.canvas.width, this.canvas.height)
-        } else {  
-            this.ball.erase(this.ctx)
-            this.ball.draw(this.ctx)
-            
-            this.ball.boundWindow(this.canvas.width, this.canvas.height)
+        this.ball.boundWindow(this.canvas.width, this.canvas.height);
+        
+        this.ball.erase(this.ctx);
+        this.ball.draw(this.ctx);
+
         }
-       
     }
 
-}
 
 
 
